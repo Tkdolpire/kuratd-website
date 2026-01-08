@@ -1,477 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Kuratd</title>
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
-            --border: #2a2a2a;
-            --text: #fafafa;
-            --text-muted: #a1a1a1;
-            --accent: #3b82f6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 24px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .logo a {
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        header h1 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .last-updated {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 48px 0 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 32px 0 12px;
-            color: var(--text);
-        }
-
-        h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 24px 0 8px;
-            color: var(--text-muted);
-        }
-
-        p {
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        ul, ol {
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            padding-left: 24px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-        }
-
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border: 1px solid var(--border);
-        }
-
-        th {
-            background: var(--card-bg);
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        td {
-            color: var(--text-muted);
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .highlight-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .highlight-box p {
-            margin: 0;
-        }
-
-        strong {
-            color: var(--text);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
-            border-top: 1px solid var(--border);
-        }
-
-        footer p {
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-
-            header h1 {
-                font-size: 28px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 8px 10px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Kuratd</title>
+  <meta name="description" content="Kuratd Privacy Policy - How we handle your data">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Navigation -->
+  <nav class="nav">
     <div class="container">
-        <header>
-            <div class="logo"><a href="/">Kuratd</a></div>
-            <h1>Privacy Policy</h1>
-            <p class="last-updated">Last Updated: January 7, 2025</p>
-        </header>
-
-        <h2>Overview</h2>
-        <p>Kuratd ("the App") is a native application for macOS and iOS that helps users transcribe, analyze, and transform podcast content into actionable intelligence. This privacy policy explains how the App handles your data across both platforms.</p>
-
-        <h2>Platform Differences</h2>
-        <p>Kuratd is available on two platforms with different data handling approaches:</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>macOS</th>
-                    <th>iOS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>User Account</td>
-                    <td>Not required</td>
-                    <td>Required (Supabase)</td>
-                </tr>
-                <tr>
-                    <td>Data Storage</td>
-                    <td>Local only</td>
-                    <td>Local + Cloud sync</td>
-                </tr>
-                <tr>
-                    <td>Email Collection</td>
-                    <td>No</td>
-                    <td>Yes (for authentication)</td>
-                </tr>
-                <tr>
-                    <td>Payment Processing</td>
-                    <td>N/A</td>
-                    <td>Apple IAP or Stripe</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Data Collection</h2>
-
-        <h3>macOS Application</h3>
-        <p>The macOS version of Kuratd is a <strong>fully local application</strong> that:</p>
-        <ul>
-            <li>Stores all data on your Mac in <code>~/Library/Application Support/Kuratd/</code></li>
-            <li>Does not require user accounts or sign-in</li>
-            <li>Does not transmit personal information to our servers</li>
-            <li>Does not share data with third parties (except as described below for AI services)</li>
-        </ul>
-
-        <h3>iOS Application</h3>
-        <p>The iOS version of Kuratd requires a user account and collects the following data:</p>
-
-        <h4>Data Linked to Your Identity</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th>Purpose</th>
-                    <th>Storage Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Email Address</td>
-                    <td>Account authentication</td>
-                    <td>Supabase</td>
-                </tr>
-                <tr>
-                    <td>User ID</td>
-                    <td>Account identification</td>
-                    <td>Supabase</td>
-                </tr>
-                <tr>
-                    <td>Subscription Status</td>
-                    <td>Access management</td>
-                    <td>Supabase</td>
-                </tr>
-                <tr>
-                    <td>Usage Statistics</td>
-                    <td>Feature analytics, credit tracking</td>
-                    <td>Supabase</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h4>Data Not Linked to Your Identity</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th>Purpose</th>
-                    <th>Storage Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Search History</td>
-                    <td>In-app search functionality</td>
-                    <td>Local device only</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Payment Processing</h2>
-
-        <h3>Apple In-App Purchase (iOS)</h3>
-        <p>If you subscribe through the iOS app:</p>
-        <ul>
-            <li><strong>Payment processor:</strong> Apple Inc.</li>
-            <li><strong>Data collected by Apple:</strong> Payment method, purchase history, Apple ID</li>
-            <li><strong>Data we receive:</strong> Subscription status, expiration date, transaction ID</li>
-            <li><strong>We do NOT receive:</strong> Your payment card details, billing address</li>
-            <li><strong>Apple's Privacy Policy:</strong> <a href="https://apple.com/legal/privacy/">apple.com/legal/privacy</a></li>
-        </ul>
-
-        <h3>Stripe (Web Subscriptions)</h3>
-        <p>If you subscribe through our website:</p>
-        <ul>
-            <li><strong>Payment processor:</strong> Stripe, Inc.</li>
-            <li><strong>Data collected by Stripe:</strong> Payment method, billing address, email</li>
-            <li><strong>Data we receive:</strong> Subscription status, customer ID, expiration date</li>
-            <li><strong>We do NOT receive:</strong> Your full payment card number</li>
-            <li><strong>Stripe's Privacy Policy:</strong> <a href="https://stripe.com/privacy">stripe.com/privacy</a></li>
-        </ul>
-
-        <p>We do not store complete payment card numbers, CVVs, or bank account details.</p>
-
-        <h2>Third-Party Services</h2>
-
-        <h3>1. Supabase (iOS Only)</h3>
-        <ul>
-            <li><strong>Purpose:</strong> User authentication, profile storage, subscription management</li>
-            <li><strong>Data Sent:</strong> Email address, user ID, usage statistics, subscription information</li>
-            <li><strong>Data Center:</strong> AWS (United States)</li>
-            <li><strong>Privacy Policy:</strong> <a href="https://supabase.com/privacy">supabase.com/privacy</a></li>
-        </ul>
-
-        <h3>2. OpenAI API (Required)</h3>
-        <ul>
-            <li><strong>Purpose:</strong> AI-powered summarization and content analysis</li>
-            <li><strong>Data Sent:</strong> Podcast transcripts (text only, not audio)</li>
-            <li><strong>Your Control:</strong>
-                <ul>
-                    <li>macOS: You provide your own OpenAI API key</li>
-                    <li>iOS: Processing through our secure proxy (included in subscription)</li>
-                </ul>
-            </li>
-            <li><strong>Privacy Policy:</strong> <a href="https://openai.com/privacy/">openai.com/privacy</a></li>
-        </ul>
-
-        <div class="highlight-box">
-            <p><strong>Important:</strong> Transcripts are sent to OpenAI servers for processing. Audio is never transmitted.</p>
-        </div>
-
-        <h3>3. HuggingFace (macOS Only)</h3>
-        <ul>
-            <li><strong>Purpose:</strong> Download WhisperKit transcription models</li>
-            <li><strong>Data Sent:</strong> HTTP requests to download model files</li>
-            <li><strong>Privacy Policy:</strong> <a href="https://huggingface.co/privacy">huggingface.co/privacy</a></li>
-        </ul>
-
-        <h3>4. Podcast RSS Feeds (User-provided)</h3>
-        <ul>
-            <li><strong>Purpose:</strong> Fetch podcast episodes and metadata</li>
-            <li><strong>Data Sent:</strong> HTTP requests to podcast hosting services</li>
-            <li><strong>Your Control:</strong> You choose which feeds to subscribe to</li>
-            <li><strong>Note:</strong> Podcast providers may log your IP address</li>
-        </ul>
-
-        <h2>Data Processing</h2>
-
-        <h3>Transcription</h3>
-        <ul>
-            <li><strong>Official Transcripts:</strong> When available, transcripts are downloaded directly from podcast RSS feeds</li>
-            <li><strong>WhisperKit (macOS):</strong> Audio is transcribed locally on your device using Apple's CoreML. No audio leaves your Mac.</li>
-            <li><strong>iOS:</strong> Transcription is performed on-device where possible</li>
-        </ul>
-
-        <h3>AI Summarization</h3>
-        <ul>
-            <li>Transcripts (text only, not audio) are sent to OpenAI API for analysis</li>
-            <li>Processing follows OpenAI's data usage policies</li>
-            <li>Review OpenAI's data retention at: <a href="https://openai.com/enterprise-privacy/">openai.com/enterprise-privacy</a></li>
-        </ul>
-
-        <h2>Data Retention</h2>
-
-        <h3>macOS</h3>
-        <ul>
-            <li>All data remains on your device until you delete it</li>
-            <li>Transcripts and summaries are cached indefinitely for offline access</li>
-            <li>Delete individual episodes or uninstall the app to remove all data</li>
-        </ul>
-
-        <h3>iOS</h3>
-        <ul>
-            <li>Cloud data (Supabase) is retained while your account is active</li>
-            <li>Local data remains on device until app is uninstalled</li>
-            <li>Subscription data retained for 2 years after cancellation for billing records</li>
-            <li>You may request account deletion at any time</li>
-        </ul>
-
-        <h2>User Rights</h2>
-
-        <p>You have full control over your data:</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Right</th>
-                    <th>macOS</th>
-                    <th>iOS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Access</strong></td>
-                    <td>SQLite database in Application Support</td>
-                    <td>Request data export via email</td>
-                </tr>
-                <tr>
-                    <td><strong>Export</strong></td>
-                    <td>Built-in export features</td>
-                    <td>Built-in export features</td>
-                </tr>
-                <tr>
-                    <td><strong>Delete</strong></td>
-                    <td>Remove app or clear via settings</td>
-                    <td>Delete account via settings or email</td>
-                </tr>
-                <tr>
-                    <td><strong>Portability</strong></td>
-                    <td>Open formats (SQLite, JSON)</td>
-                    <td>Export features available</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3>Account Deletion (iOS)</h3>
-        <p>To delete your iOS account and all associated data:</p>
-        <ol>
-            <li>Go to <strong>Settings</strong> within the app</li>
-            <li>Select <strong>Delete Account</strong></li>
-            <li>Or email <a href="mailto:tyron@indiestudio.ai">tyron@indiestudio.ai</a> with your account email</li>
-        </ol>
-        <p>Deletion is completed within 30 days.</p>
-
-        <h2>Data Security</h2>
-        <ul>
-            <li><strong>macOS:</strong> API keys stored in macOS Keychain (hardware-protected)</li>
-            <li><strong>iOS:</strong> Authentication handled by Supabase with industry-standard encryption</li>
-            <li><strong>Transit:</strong> All network communications use HTTPS/TLS encryption</li>
-            <li><strong>Payments:</strong> Handled by Apple and Stripe (PCI-DSS compliant)</li>
-            <li><strong>No Tracking:</strong> We do not use advertising identifiers (IDFA) or share data with advertisers</li>
-        </ul>
-
-        <h2>Children's Privacy</h2>
-        <p>Kuratd does not knowingly collect information from children under 13. The app is designed for adult professional use.</p>
-
-        <h2>International Data Transfers</h2>
-        <p>If you are located outside the United States:</p>
-        <ul>
-            <li><strong>Supabase data</strong> is stored in AWS data centers in the United States</li>
-            <li><strong>OpenAI processing</strong> occurs in the United States</li>
-            <li><strong>Stripe processing</strong> may occur in the United States or your local region</li>
-        </ul>
-        <p>By using Kuratd, you consent to the transfer of your data to the United States.</p>
-
-        <h2>Changes to This Policy</h2>
-        <p>We may update this privacy policy from time to time. Changes will be reflected in the "Last Updated" date at the top of this document. For significant changes affecting data collection, we will notify iOS users through the app or via email.</p>
-
-        <h2>Contact</h2>
-        <p>For questions, concerns, or data requests regarding this privacy policy:</p>
-        <p><strong>Email:</strong> <a href="mailto:tyron@indiestudio.ai">tyron@indiestudio.ai</a></p>
-
-        <footer>
-            <p>&copy; 2025 IndieStudio. All rights reserved.</p>
-            <p style="margin-top: 8px;">
-                <a href="/">Home</a> &middot;
-                <a href="/support">Support</a> &middot;
-                <a href="/terms">Terms</a>
-            </p>
-        </footer>
+      <a href="/" class="nav-logo">Kuratd</a>
+      <ul class="nav-links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/support.html">Support</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+      </ul>
     </div>
+  </nav>
+
+  <!-- Privacy Policy Content -->
+  <main class="legal-page">
+    <div class="legal-content">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: January 7, 2025</p>
+
+      <p>Kuratd ("the App") is a native application for macOS and iOS that helps users transcribe, analyze, and transform podcast content into actionable intelligence. This privacy policy explains how the App handles your data across both platforms.</p>
+
+      <h2>Platform Differences</h2>
+      <p>Kuratd is available on two platforms with different data handling approaches:</p>
+      <ul>
+        <li><strong>macOS:</strong> No account required, all data stored locally, no email collection</li>
+        <li><strong>iOS:</strong> Account required (Supabase), local + cloud sync, email collected for authentication</li>
+      </ul>
+
+      <h2>Data Collection</h2>
+
+      <h3>macOS Application</h3>
+      <p>The macOS version of Kuratd is a <strong>fully local application</strong> that:</p>
+      <ul>
+        <li>Stores all data on your Mac in <code>~/Library/Application Support/Kuratd/</code></li>
+        <li>Does not require user accounts or sign-in</li>
+        <li>Does not transmit personal information to our servers</li>
+        <li>Does not share data with third parties (except as described below for AI services)</li>
+      </ul>
+
+      <h3>iOS Application</h3>
+      <p>The iOS version requires a user account and collects:</p>
+      <ul>
+        <li><strong>Email Address:</strong> For account authentication (stored in Supabase)</li>
+        <li><strong>User ID:</strong> For account identification (stored in Supabase)</li>
+        <li><strong>Subscription Status:</strong> For access management (stored in Supabase)</li>
+        <li><strong>Usage Statistics:</strong> For feature analytics and credit tracking (stored in Supabase)</li>
+        <li><strong>Search History:</strong> Stored locally on device only</li>
+      </ul>
+
+      <h2>Payment Processing</h2>
+
+      <h3>Apple In-App Purchase (iOS)</h3>
+      <p>If you subscribe through the iOS app:</p>
+      <ul>
+        <li><strong>Payment processor:</strong> Apple Inc.</li>
+        <li><strong>Data we receive:</strong> Subscription status, expiration date, transaction ID</li>
+        <li><strong>We do NOT receive:</strong> Your payment card details, billing address</li>
+      </ul>
+
+      <h3>Stripe (Web Subscriptions)</h3>
+      <p>If you subscribe through our website:</p>
+      <ul>
+        <li><strong>Payment processor:</strong> Stripe, Inc.</li>
+        <li><strong>Data we receive:</strong> Subscription status, customer ID, expiration date</li>
+        <li><strong>We do NOT receive:</strong> Your full payment card number</li>
+      </ul>
+
+      <p>We do not store complete payment card numbers, CVVs, or bank account details.</p>
+
+      <h2>Third-Party Services</h2>
+
+      <h3>Supabase (iOS Only)</h3>
+      <ul>
+        <li><strong>Purpose:</strong> User authentication, profile storage, subscription management</li>
+        <li><strong>Data Sent:</strong> Email address, user ID, usage statistics, subscription information</li>
+        <li><strong>Data Center:</strong> AWS (United States)</li>
+      </ul>
+
+      <h3>OpenAI API (Required)</h3>
+      <ul>
+        <li><strong>Purpose:</strong> AI-powered summarization and content analysis</li>
+        <li><strong>Data Sent:</strong> Podcast transcripts (text only, not audio)</li>
+        <li><strong>macOS:</strong> You provide your own OpenAI API key</li>
+        <li><strong>iOS:</strong> Processing through our secure proxy (included in subscription)</li>
+      </ul>
+      <p><strong>Important:</strong> Transcripts are sent to OpenAI servers for processing. Audio is never transmitted.</p>
+
+      <h3>HuggingFace (macOS Only)</h3>
+      <ul>
+        <li><strong>Purpose:</strong> Download WhisperKit transcription models</li>
+        <li><strong>Data Sent:</strong> HTTP requests to download model files</li>
+      </ul>
+
+      <h3>Podcast RSS Feeds</h3>
+      <ul>
+        <li><strong>Purpose:</strong> Fetch podcast episodes and metadata</li>
+        <li><strong>Your Control:</strong> You choose which feeds to subscribe to</li>
+        <li><strong>Note:</strong> Podcast providers may log your IP address</li>
+      </ul>
+
+      <h2>Data Processing</h2>
+
+      <h3>Transcription</h3>
+      <ul>
+        <li><strong>Official Transcripts:</strong> When available, downloaded directly from podcast RSS feeds</li>
+        <li><strong>WhisperKit (macOS):</strong> Audio transcribed locally on your device using Apple's CoreML. No audio leaves your Mac.</li>
+        <li><strong>iOS:</strong> Transcription performed on-device where possible</li>
+      </ul>
+
+      <h3>AI Summarization</h3>
+      <ul>
+        <li>Transcripts (text only, not audio) are sent to OpenAI API for analysis</li>
+        <li>Processing follows OpenAI's data usage policies</li>
+      </ul>
+
+      <h2>Data Retention</h2>
+
+      <h3>macOS</h3>
+      <ul>
+        <li>All data remains on your device until you delete it</li>
+        <li>Transcripts and summaries cached indefinitely for offline access</li>
+        <li>Delete individual episodes or uninstall the app to remove all data</li>
+      </ul>
+
+      <h3>iOS</h3>
+      <ul>
+        <li>Cloud data (Supabase) retained while your account is active</li>
+        <li>Local data remains on device until app is uninstalled</li>
+        <li>Subscription data retained for 2 years after cancellation for billing records</li>
+        <li>You may request account deletion at any time</li>
+      </ul>
+
+      <h2>Your Rights</h2>
+      <p>You have full control over your data:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of your personal data</li>
+        <li><strong>Export:</strong> Use built-in export features</li>
+        <li><strong>Delete:</strong> Remove app data via settings or delete your account</li>
+        <li><strong>Portability:</strong> Export in open formats (SQLite, JSON)</li>
+      </ul>
+
+      <h3>Account Deletion (iOS)</h3>
+      <p>To delete your iOS account and all associated data:</p>
+      <ol>
+        <li>Go to <strong>Settings</strong> within the app</li>
+        <li>Select <strong>Delete Account</strong></li>
+        <li>Or email <a href="mailto:tyron@indiestudio.ai">tyron@indiestudio.ai</a> with your account email</li>
+      </ol>
+      <p>Deletion is completed within 30 days.</p>
+
+      <h2>Data Security</h2>
+      <ul>
+        <li><strong>macOS:</strong> API keys stored in macOS Keychain (hardware-protected)</li>
+        <li><strong>iOS:</strong> Authentication handled by Supabase with industry-standard encryption</li>
+        <li><strong>Transit:</strong> All network communications use HTTPS/TLS encryption</li>
+        <li><strong>Payments:</strong> Handled by Apple and Stripe (PCI-DSS compliant)</li>
+        <li><strong>No Tracking:</strong> We do not use advertising identifiers (IDFA) or share data with advertisers</li>
+      </ul>
+
+      <h2>Children's Privacy</h2>
+      <p>Kuratd does not knowingly collect information from children under 13. The app is designed for adult professional use.</p>
+
+      <h2>International Data Transfers</h2>
+      <p>If you are located outside the United States:</p>
+      <ul>
+        <li>Supabase data is stored in AWS data centers in the United States</li>
+        <li>OpenAI processing occurs in the United States</li>
+        <li>Stripe processing may occur in the United States or your local region</li>
+      </ul>
+      <p>By using Kuratd, you consent to the transfer of your data to the United States.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>We may update this privacy policy from time to time. Changes will be reflected in the "Last updated" date at the top of this document. For significant changes affecting data collection, we will notify iOS users through the app or via email.</p>
+
+      <h2>Contact Us</h2>
+      <p>For questions, concerns, or data requests regarding this privacy policy:</p>
+      <ul>
+        <li>Email: <a href="mailto:tyron@indiestudio.ai">tyron@indiestudio.ai</a></li>
+        <li>Website: <a href="https://kuratd.com/support.html">kuratd.com/support</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Indie Studio. All rights reserved. | <a href="/privacy.html">Privacy</a> | <a href="/terms.html">Terms</a></p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
