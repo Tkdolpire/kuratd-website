@@ -109,6 +109,82 @@
     </div>
   </section>
 
+  <!-- Platform Detection Script -->
+  <script>
+    (function() {
+      // App Store URLs
+      const APP_STORE_URLS = {
+        ios: 'https://apps.apple.com/app/kuratd/id6755112737',
+        mac: 'https://apps.apple.com/app/kuratd/id6755112737?mt=12'
+      };
+
+      // Detect platform
+      function detectPlatform() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        const platform = navigator.platform || '';
+
+        // Check for iOS devices
+        if (/iPad|iPhone|iPod/.test(ua) ||
+            (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+          return 'ios';
+        }
+
+        // Check for macOS
+        if (platform.indexOf('Mac') !== -1 || /Macintosh/.test(ua)) {
+          return 'mac';
+        }
+
+        // Default to iOS for other platforms (they can choose)
+        return 'other';
+      }
+
+      // Update App Store links and badges
+      function updateAppStoreLinks() {
+        const platform = detectPlatform();
+        const url = platform === 'ios' ? APP_STORE_URLS.ios : APP_STORE_URLS.mac;
+        const isMac = platform === 'mac';
+
+        // Update hero App Store badge
+        const appStoreBtn = document.getElementById('app-store-btn');
+        if (appStoreBtn) {
+          appStoreBtn.href = url;
+          const badge = appStoreBtn.querySelector('.app-store-badge');
+          if (badge) {
+            // Use appropriate badge based on platform
+            badge.src = isMac
+              ? 'https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83'
+              : 'https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83';
+            badge.alt = isMac ? 'Download on the Mac App Store' : 'Download on the App Store';
+          }
+        }
+
+        // Update CTA download button
+        const downloadBtn = document.getElementById('download-btn');
+        if (downloadBtn) {
+          downloadBtn.href = url;
+          // Update button text
+          const textNode = Array.from(downloadBtn.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+          if (textNode) {
+            textNode.textContent = isMac ? ' Download for Mac' : ' Download for iOS';
+          } else {
+            // If no text node, append after SVG
+            const svg = downloadBtn.querySelector('svg');
+            if (svg && svg.nextSibling) {
+              svg.nextSibling.textContent = isMac ? ' Download for Mac' : ' Download for iOS';
+            }
+          }
+        }
+      }
+
+      // Run on DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateAppStoreLinks);
+      } else {
+        updateAppStoreLinks();
+      }
+    })();
+  </script>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
