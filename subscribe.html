@@ -1,600 +1,526 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribe to Kuratd</title>
-    <script src="https://js.stripe.com/v3/"></script>
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
-            --border: #2a2a2a;
-            --text: #fafafa;
-            --text-muted: #a1a1a1;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --success: #22c55e;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribe - Kuratd</title>
+  <meta name="description" content="Choose a Kuratd plan and unlock more podcast intelligence">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    /* Subscribe page specific styles */
+    .subscribe-hero {
+      padding: 140px 0 60px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--brand-beige) 0%, var(--background) 100%);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .subscribe-hero h1 {
+      margin-bottom: 16px;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+    .subscribe-hero p {
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    .billing-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 40px auto;
+      background: var(--background-alt);
+      padding: 6px;
+      border-radius: var(--radius);
+      width: fit-content;
+      border: 1px solid var(--border);
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
+    .billing-toggle button {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
 
-        .logo {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
+    .billing-toggle button.active {
+      background: var(--brand-black);
+      color: white;
+    }
 
-        .logo span {
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .billing-toggle button:hover:not(.active) {
+      color: var(--text-primary);
+    }
 
-        header h1 {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+    .save-badge {
+      background: #22c55e;
+      color: white;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-weight: 600;
+    }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 18px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
 
-        .billing-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 32px;
-            background: var(--card-bg);
-            padding: 4px;
-            border-radius: 12px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .plan-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      transition: var(--transition);
+    }
 
-        .billing-toggle button {
-            padding: 12px 24px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
 
-        .billing-toggle button.active {
-            background: var(--accent);
-            color: white;
-        }
+    .plan-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), var(--shadow);
+    }
 
-        .billing-toggle button:hover:not(.active) {
-            color: var(--text);
-        }
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
 
-        .save-badge {
-            background: var(--success);
-            color: white;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 8px;
-        }
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-        .plans {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
+    .plan-credits {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
 
-        .plan-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            position: relative;
-            transition: all 0.2s;
-        }
+    .plan-price {
+      margin-bottom: 24px;
+    }
 
-        .plan-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
+    .price {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
 
-        .plan-card.popular {
-            border-color: var(--accent);
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
-        }
+    .period {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
 
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
+    .monthly-equiv {
+      color: var(--text-tertiary);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
 
-        .plan-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+    .plan-features {
+      list-style: none;
+      margin-bottom: 32px;
+      padding: 0;
+    }
 
-        .plan-credits {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
 
-        .plan-price {
-            margin-bottom: 24px;
-        }
+    .plan-features li::before {
+      content: "✓";
+      color: #22c55e;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
 
-        .price {
-            font-size: 48px;
-            font-weight: 700;
-        }
+    .subscribe-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
 
-        .period {
-            color: var(--text-muted);
-            font-size: 16px;
-        }
+    .subscribe-btn.primary {
+      background: var(--brand-black);
+      color: white;
+    }
 
-        .monthly-equiv {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 4px;
-        }
+    .subscribe-btn.primary:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
 
-        .plan-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
+    .subscribe-btn.secondary {
+      background: white;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
 
-        .plan-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
+    .subscribe-btn.secondary:hover {
+      background: var(--background-alt);
+      border-color: var(--text-tertiary);
+    }
 
-        .plan-features li::before {
-            content: "✓";
-            color: var(--success);
-            font-weight: bold;
-        }
+    .subscribe-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-        .subscribe-btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+    /* Features section */
+    .all-features {
+      background: var(--background-alt);
+      padding: 80px 0;
+    }
 
-        .subscribe-btn.primary {
-            background: var(--accent);
-            color: white;
-        }
+    .all-features h2 {
+      text-align: center;
+      margin-bottom: 48px;
+    }
 
-        .subscribe-btn.primary:hover {
-            background: var(--accent-hover);
-        }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .subscribe-btn.secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
+    .feature-item {
+      display: flex;
+      gap: 16px;
+    }
 
-        .subscribe-btn.secondary:hover {
-            border-color: var(--text-muted);
-        }
+    .feature-item .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
 
-        .subscribe-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+    .feature-item h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
 
-        .features {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 48px;
-        }
+    .feature-item p {
+      font-size: 0.9rem;
+    }
 
-        .features h2 {
-            text-align: center;
-            margin-bottom: 32px;
-            font-size: 24px;
-        }
+    /* FAQ section */
+    .faq-section {
+      padding: 80px 0;
+    }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
+    .faq-section h2 {
+      text-align: center;
+      margin-bottom: 48px;
+    }
 
-        .feature {
-            display: flex;
-            gap: 16px;
-        }
-
-        .feature-icon {
-            font-size: 24px;
-            width: 48px;
-            height: 48px;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .feature h3 {
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .feature p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .faq {
-            margin-bottom: 48px;
-        }
-
-        .faq h2 {
-            text-align: center;
-            margin-bottom: 32px;
-            font-size: 24px;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border);
-            padding: 20px 0;
-        }
-
-        .faq-item h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        .faq-item p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: var(--text);
-        }
-
-        .auth-notice {
-            text-align: center;
-            padding: 16px;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 12px;
-            margin-bottom: 32px;
-            font-size: 14px;
-        }
-
-        .auth-notice a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 28px;
-            }
-
-            .plans {
-                grid-template-columns: 1fr;
-            }
-
-            .price {
-                font-size: 36px;
-            }
-        }
-    </style>
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation -->
+  <nav class="nav">
     <div class="container">
-        <header>
-            <div class="logo"><span>Kuratd</span></div>
-            <h1>Unlock More Intelligence</h1>
-            <p>Process more episodes and get deeper insights from your favorite podcasts.</p>
-            <p style="margin-top: 16px;">
-                <a href="https://apps.apple.com/app/kuratd/id123456789" style="color: var(--accent); text-decoration: none; font-weight: 500;">Download for Mac</a>
-            </p>
-        </header>
+      <a href="/" class="nav-logo">Kuratd</a>
+      <ul class="nav-links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/support.html">Support</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </nav>
 
-        <div class="auth-notice" id="authNotice">
-            Already have an account? <a href="#" id="signInLink">Sign in</a> to manage your subscription.
-        </div>
+  <!-- Subscribe Hero -->
+  <section class="subscribe-hero">
+    <div class="container">
+      <h1>Unlock More Intelligence</h1>
+      <p>Process more episodes and get deeper insights from your favorite podcasts.</p>
+      <p style="margin-top: 16px;">
+        <a href="https://apps.apple.com/app/kuratd/id123456789">Download for Mac</a>
+      </p>
+    </div>
+  </section>
 
-        <div class="billing-toggle">
-            <button id="monthlyBtn" onclick="setBilling('monthly')">Monthly</button>
-            <button id="yearlyBtn" class="active" onclick="setBilling('yearly')">
-                Yearly <span class="save-badge">Save 25%</span>
-            </button>
-        </div>
+  <!-- Billing Toggle -->
+  <div class="billing-toggle">
+    <button id="monthlyBtn" onclick="setBilling('monthly')">Monthly</button>
+    <button id="yearlyBtn" class="active" onclick="setBilling('yearly')">
+      Yearly <span class="save-badge">Save 25%</span>
+    </button>
+  </div>
 
-        <div class="plans">
-            <div class="plan-card" data-tier="lite">
-                <h2 class="plan-name">Lite</h2>
-                <p class="plan-credits">20 episodes/month</p>
-                <div class="plan-price">
-                    <span class="price" data-monthly="$3.99" data-yearly="$34.99">$34.99</span>
-                    <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
-                    <p class="monthly-equiv" data-yearly="~$2.92/month"></p>
-                </div>
-                <ul class="plan-features">
-                    <li>AI-powered summaries</li>
-                    <li>Key quotes & insights</li>
-                    <li>Copy & share anywhere</li>
-                    <li>Email support</li>
-                </ul>
-                <button class="subscribe-btn secondary" onclick="subscribe('lite')">Get Started</button>
-            </div>
-
-            <div class="plan-card popular" data-tier="pro">
-                <span class="popular-badge">Most Popular</span>
-                <h2 class="plan-name">Pro</h2>
-                <p class="plan-credits">60 episodes/month</p>
-                <div class="plan-price">
-                    <span class="price" data-monthly="$9.99" data-yearly="$89.99">$89.99</span>
-                    <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
-                    <p class="monthly-equiv" data-yearly="~$7.50/month"></p>
-                </div>
-                <ul class="plan-features">
-                    <li>Everything in Lite</li>
-                    <li>Weekly digest reports</li>
-                    <li>Twitter & LinkedIn sharing</li>
-                    <li>Priority processing</li>
-                </ul>
-                <button class="subscribe-btn primary" onclick="subscribe('pro')">Get Started</button>
-            </div>
-
-            <div class="plan-card" data-tier="unlimited">
-                <h2 class="plan-name">Unlimited</h2>
-                <p class="plan-credits">150+ episodes/month</p>
-                <div class="plan-price">
-                    <span class="price" data-monthly="$19.99" data-yearly="$179.99">$179.99</span>
-                    <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
-                    <p class="monthly-equiv" data-yearly="~$15.00/month"></p>
-                </div>
-                <ul class="plan-features">
-                    <li>Everything in Pro</li>
-                    <li>Unlimited processing</li>
-                    <li>API access</li>
-                    <li>Priority support</li>
-                </ul>
-                <button class="subscribe-btn secondary" onclick="subscribe('unlimited')">Get Started</button>
-            </div>
-        </div>
-
-        <div class="features">
-            <h2>All Plans Include</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">🎙️</div>
-                    <div>
-                        <h3>Smart Summaries</h3>
-                        <p>AI extracts key takeaways from any podcast episode</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">⏱️</div>
-                    <div>
-                        <h3>Save Time</h3>
-                        <p>Get insights in 2 minutes instead of 60</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">💬</div>
-                    <div>
-                        <h3>Key Quotes</h3>
-                        <p>Notable quotes with timestamps for reference</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📊</div>
-                    <div>
-                        <h3>Data Extraction</h3>
-                        <p>Metrics and facts automatically captured</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📤</div>
-                    <div>
-                        <h3>Share Anywhere</h3>
-                        <p>Twitter, LinkedIn, newsletters, and clipboard</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <div>
-                        <h3>Privacy First</h3>
-                        <p>On-device transcription, your data stays yours</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="faq">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <h3>What counts as an episode credit?</h3>
-                <p>Each podcast episode you process uses one credit, regardless of length. Credits reset monthly on your billing date.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Can I cancel anytime?</h3>
-                <p>Yes! You can cancel your subscription at any time. You'll keep access until the end of your billing period.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Why subscribe on the web vs. in-app?</h3>
-                <p>Subscribing on the web helps us keep prices low by avoiding app store fees. You get the same features either way.</p>
-            </div>
-            <div class="faq-item">
-                <h3>What payment methods do you accept?</h3>
-                <p>We accept all major credit cards, Apple Pay, and Google Pay through Stripe's secure payment system.</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>&copy; 2025 IndieStudio. All rights reserved.</p>
-            <p style="margin-top: 8px;">
-                <a href="https://kuratd.app/privacy">Privacy Policy</a> ·
-                <a href="https://kuratd.app/terms">Terms of Service</a> ·
-                <a href="mailto:tyron@indiestudio.ai">Contact</a>
-            </p>
-        </footer>
+  <!-- Pricing Plans -->
+  <div class="plans">
+    <div class="plan-card" data-tier="lite">
+      <h2 class="plan-name">Lite</h2>
+      <p class="plan-credits">20 episodes/month</p>
+      <div class="plan-price">
+        <span class="price" data-monthly="$3.99" data-yearly="$34.99">$34.99</span>
+        <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
+        <p class="monthly-equiv" data-yearly="~$2.92/month"></p>
+      </div>
+      <ul class="plan-features">
+        <li>AI-powered summaries</li>
+        <li>Key quotes & insights</li>
+        <li>Copy & share anywhere</li>
+        <li>Email support</li>
+      </ul>
+      <button class="subscribe-btn secondary" onclick="subscribe('lite')">Get Started</button>
     </div>
 
-    <script>
-        // Configuration
-        const CONFIG = {
-            supabaseUrl: 'https://nprdmfnfbaeqeyitqiwt.supabase.co',
-            stripePublishableKey: 'pk_live_51Q0mtkRvMCYxoN0uIt7Lkg1cn4WwEBuSuxrfuTtc51HxKdH7r18z0rsCcgvvfv8ixdXTrqqqgZC1sEWXKOE3GJDv00gmZMx9UF',
-            successUrl: 'https://kuratd.app/subscribe/success',
-            cancelUrl: 'https://kuratd.app/subscribe'
-        };
+    <div class="plan-card popular" data-tier="pro">
+      <span class="popular-badge">Most Popular</span>
+      <h2 class="plan-name">Pro</h2>
+      <p class="plan-credits">60 episodes/month</p>
+      <div class="plan-price">
+        <span class="price" data-monthly="$9.99" data-yearly="$89.99">$89.99</span>
+        <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
+        <p class="monthly-equiv" data-yearly="~$7.50/month"></p>
+      </div>
+      <ul class="plan-features">
+        <li>Everything in Lite</li>
+        <li>Weekly digest reports</li>
+        <li>Twitter & LinkedIn sharing</li>
+        <li>Priority processing</li>
+      </ul>
+      <button class="subscribe-btn primary" onclick="subscribe('pro')">Get Started</button>
+    </div>
 
-        let billingPeriod = 'yearly';
-        let stripe = null;
+    <div class="plan-card" data-tier="unlimited">
+      <h2 class="plan-name">Unlimited</h2>
+      <p class="plan-credits">150+ episodes/month</p>
+      <div class="plan-price">
+        <span class="price" data-monthly="$19.99" data-yearly="$179.99">$179.99</span>
+        <span class="period" data-monthly="/month" data-yearly="/year">/year</span>
+        <p class="monthly-equiv" data-yearly="~$15.00/month"></p>
+      </div>
+      <ul class="plan-features">
+        <li>Everything in Pro</li>
+        <li>Unlimited processing</li>
+        <li>API access</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="subscribe-btn secondary" onclick="subscribe('unlimited')">Get Started</button>
+    </div>
+  </div>
 
-        // Initialize Stripe
-        document.addEventListener('DOMContentLoaded', () => {
-            if (CONFIG.stripePublishableKey !== 'YOUR_STRIPE_PUBLISHABLE_KEY') {
-                stripe = Stripe(CONFIG.stripePublishableKey);
-            }
+  <!-- All Plans Include -->
+  <section class="all-features">
+    <h2>All Plans Include</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🎙️</div>
+        <div>
+          <h3>Smart Summaries</h3>
+          <p>AI extracts key takeaways from any podcast episode</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⏱️</div>
+        <div>
+          <h3>Save Time</h3>
+          <p>Get insights in 2 minutes instead of 60</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div>
+          <h3>Key Quotes</h3>
+          <p>Notable quotes with timestamps for reference</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div>
+          <h3>Data Extraction</h3>
+          <p>Metrics and facts automatically captured</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📤</div>
+        <div>
+          <h3>Share Anywhere</h3>
+          <p>Twitter, LinkedIn, newsletters, and clipboard</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <div>
+          <h3>Privacy First</h3>
+          <p>On-device transcription, your data stays yours</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>What counts as an episode credit?</h3>
+        <p>Each podcast episode you process uses one credit, regardless of length. Credits reset monthly on your billing date.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I cancel anytime?</h3>
+        <p>Yes! You can cancel your subscription at any time. You'll keep access until the end of your billing period.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why subscribe on the web vs. in-app?</h3>
+        <p>Subscribing on the web helps us keep prices low by avoiding app store fees. You get the same features either way.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What payment methods do you accept?</h3>
+        <p>We accept all major credit cards, Apple Pay, and Google Pay through Stripe's secure payment system.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Indie Studio. All rights reserved. | <a href="/privacy.html">Privacy</a> | <a href="/terms.html">Terms</a> | <a href="mailto:tyron@indiestudio.ai">Contact</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configuration
+    const CONFIG = {
+      supabaseUrl: 'https://nprdmfnfbaeqeyitqiwt.supabase.co',
+      stripePublishableKey: 'pk_live_51Q0mtkRvMCYxoN0uIt7Lkg1cn4WwEBuSuxrfuTtc51HxKdH7r18z0rsCcgvvfv8ixdXTrqqqgZC1sEWXKOE3GJDv00gmZMx9UF',
+      successUrl: 'https://kuratd.com/success.html',
+      cancelUrl: 'https://kuratd.com/subscribe.html'
+    };
+
+    let billingPeriod = 'yearly';
+    let stripe = null;
+
+    // Initialize Stripe
+    document.addEventListener('DOMContentLoaded', () => {
+      if (CONFIG.stripePublishableKey !== 'YOUR_STRIPE_PUBLISHABLE_KEY') {
+        stripe = Stripe(CONFIG.stripePublishableKey);
+      }
+    });
+
+    function setBilling(period) {
+      billingPeriod = period;
+
+      // Update toggle buttons
+      document.getElementById('monthlyBtn').classList.toggle('active', period === 'monthly');
+      document.getElementById('yearlyBtn').classList.toggle('active', period === 'yearly');
+
+      // Update prices
+      document.querySelectorAll('.price').forEach(el => {
+        el.textContent = el.dataset[period];
+      });
+
+      document.querySelectorAll('.period').forEach(el => {
+        el.textContent = el.dataset[period];
+      });
+
+      // Show/hide yearly equivalent
+      document.querySelectorAll('.monthly-equiv').forEach(el => {
+        el.style.display = period === 'yearly' ? 'block' : 'none';
+      });
+    }
+
+    async function subscribe(tier) {
+      if (!stripe) {
+        alert('Payment system is being configured. Please try again later or subscribe in the app.');
+        return;
+      }
+
+      // Disable button
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Loading...';
+
+      try {
+        // Call Supabase Edge Function to create checkout session
+        const response = await fetch(`${CONFIG.supabaseUrl}/functions/v1/create-checkout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tier: tier,
+            billing: billingPeriod,
+            successUrl: CONFIG.successUrl,
+            cancelUrl: CONFIG.cancelUrl
+          })
         });
 
-        function setBilling(period) {
-            billingPeriod = period;
-
-            // Update toggle buttons
-            document.getElementById('monthlyBtn').classList.toggle('active', period === 'monthly');
-            document.getElementById('yearlyBtn').classList.toggle('active', period === 'yearly');
-
-            // Update prices
-            document.querySelectorAll('.price').forEach(el => {
-                el.textContent = el.dataset[period];
-            });
-
-            document.querySelectorAll('.period').forEach(el => {
-                el.textContent = el.dataset[period];
-            });
-
-            // Show/hide yearly equivalent
-            document.querySelectorAll('.monthly-equiv').forEach(el => {
-                el.style.display = period === 'yearly' ? 'block' : 'none';
-            });
+        if (!response.ok) {
+          throw new Error('Failed to create checkout session');
         }
 
-        async function subscribe(tier) {
-            if (!stripe) {
-                alert('Payment system is being configured. Please try again later or subscribe in the app.');
-                return;
-            }
+        const { sessionId } = await response.json();
 
-            // Disable button
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = 'Loading...';
+        // Redirect to Stripe Checkout
+        const { error } = await stripe.redirectToCheckout({ sessionId });
 
-            try {
-                // Call Supabase Edge Function to create checkout session
-                const response = await fetch(`${CONFIG.supabaseUrl}/functions/v1/create-checkout`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        tier: tier,
-                        billing: billingPeriod,
-                        successUrl: CONFIG.successUrl,
-                        cancelUrl: CONFIG.cancelUrl
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to create checkout session');
-                }
-
-                const { sessionId } = await response.json();
-
-                // Redirect to Stripe Checkout
-                const { error } = await stripe.redirectToCheckout({ sessionId });
-
-                if (error) {
-                    throw error;
-                }
-            } catch (error) {
-                console.error('Checkout error:', error);
-                alert('Something went wrong. Please try again or subscribe in the app.');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Get Started';
-            }
+        if (error) {
+          throw error;
         }
-    </script>
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Something went wrong. Please try again or subscribe in the app.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Get Started';
+      }
+    }
+  </script>
 </body>
 </html>
